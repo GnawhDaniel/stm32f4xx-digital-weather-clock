@@ -9,7 +9,8 @@ A DHT20 retrieves temperature and humidity data within the space the embedded sy
 A DS1307 real-time clock (RTC) with a backup CMOS battery maintains accurate timekeeping when the microcontroller is powered off.
 
 ## Demonstration
-https://github.com/user-attachments/assets/be06e873-0dd8-48de-b1c8-ff269aef6ca1
+https://github.com/user-attachments/assets/f1194003-7ca3-4a72-b94b-5bdfc165cecd
+
 
 
 ## Images
