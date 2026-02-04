@@ -7,6 +7,9 @@
 #include "esp8266ex_driver.h"
 
 
+/*
+@brief Converts n characters of a numeric string to uint16_t
+*/
 static uint16_t atoi_n(const char *s, uint8_t n)
 {
     uint16_t val = 0;
@@ -17,6 +20,9 @@ static uint16_t atoi_n(const char *s, uint8_t n)
 }
 
 
+/*
+@brief Helper function to parse datetime string in the format "YYYY-MM-DD HH:MM:SS"
+*/
 void parse_datetime(const char *dt,
                     uint8_t *year,
                     uint8_t *month,
@@ -25,7 +31,6 @@ void parse_datetime(const char *dt,
                     uint8_t *minute,
                     uint8_t *second)
 {
-    // Year: take last two digits only
     *year   = (uint8_t)atoi_n(&dt[2], 2);  // "2026" → "26"
     *month  = (uint8_t)atoi_n(&dt[5], 2);
     *date    = (uint8_t)atoi_n(&dt[8], 2);
@@ -35,8 +40,13 @@ void parse_datetime(const char *dt,
 }
 
 
-
-
+/*
+* @brief - Parses the HTTP response from the time server and extracts the datetime information
+*
+* @param response - The HTTP response string
+*
+* @return - Clock structure with parsed date and time
+*/
 static Clock parse_time_response(char* response)
 {
 	Clock clock = {0};
@@ -45,6 +55,7 @@ static Clock parse_time_response(char* response)
     char weekday;
     uint8_t month, date, hour, minute, second, year;
 
+		// Find beginning of JSON payload
     char* json_start = strchr(response, '{');
 
     char* dt = strstr(json_start, "\"datetime\": \"");

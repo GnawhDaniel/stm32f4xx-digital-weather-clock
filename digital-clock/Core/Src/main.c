@@ -305,9 +305,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  user_button_state = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);;
-  DHT20.state = IDLE;
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -316,7 +313,8 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  user_button_state = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);;
+  DHT20.state = IDLE;
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -341,19 +339,6 @@ int main(void)
   lcd_display_clear();
   lcd_set_cursor(1,1);
 
-//  lcd_print_string("test");
-//  initialize_wifi();
-
-//  while(1)
-//  {
-//	  if (DHT20_Read(&hi2c1))
-//	  {
-//
-//	  }
-//  }
-
-
-  lcd_display_clear();
   if (HAL_TIM_Base_Start_IT(&htim2) != HAL_OK) // Start global interrupt every 1 second
   {
 	  /* Starting Error */
@@ -369,6 +354,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+	// Once user switches mode, clear the display
 	if(mode_changed)
 	{
 		lcd_display_clear();
@@ -386,6 +373,7 @@ int main(void)
 	}
 	else if (is_fetching_data_from_server == FREE)
 	{
+		// Handle Modes
 		if(modes[current_mode_index] == MODE_TIME)
 		{
 			if(is_update_digital_clock == BUSY)
